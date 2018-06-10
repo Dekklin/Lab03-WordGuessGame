@@ -2,13 +2,13 @@
 using System.IO;
 namespace WordGuessGame
 {
-    class Program
+    public class Program
     {
-        static string path = "../../../WordList.md";
+        static string path = "../../../WordList.txt";
 
         static void Main(string[] args)
         {
-            CreateFile();
+            CreateFile(path);
             MainMenu();
         }
         static void MainMenu()
@@ -43,23 +43,82 @@ namespace WordGuessGame
         }
         static void StartGame()
         {
-            string word = RandomWordSelect();
-            Console.WriteLine($"Your word has {word.Length} letters in it. Input one letter to guess a letter in your word. Type out the word when you think you've got it");
             bool finishedGame = false;
+            string word = RandomWordSelect();
             char[] randomWord = new char[word.Length];
-            while (!finishedGame)
+            char[] guessedLetters = new char[30];
+            char[] wrongLetters = new char[7];
+            int attempts = 7;
+            int correctIndex = 0;
+            int wrongIndex = 0;
+            for (int i = 0; i < randomWord.Length; i++)
+                randomWord[i] = '*';
+            string hiddenWord = string.Join("", randomWord);
+            Console.WriteLine(randomWord);
+            while (!finishedGame && attempts > 0)
             {
-                Console.WriteLine("Please input your guess");
-                foreach (int i in randomWord)
-                    Console.Write("*");
-                string letterGuess = Console.ReadLine();
-                if (word.Contains(letterGuess))
+                bool newLetter = false;
+                Console.WriteLine($"Lives Remaining: {attempts}");
+                Console.WriteLine($"Heres your word: {hiddenWord}");
+                Console.WriteLine($"Correct Letters Guessed: {string.Join(' ', guessedLetters)}");
+                Console.WriteLine($"Incorrect Letters Guessed: {string.Join(' ', wrongLetters)}");
+
+                char letterGuess = LetterGuess();
+                if (!string.Join("", guessedLetters).Contains(guessedLetters.ToString()) && !string.Join("", wrongLetters).Contains(letterGuess.ToString()))
+                    newLetter = true;
+                while(!newLetter)
                 {
-                    Console.WriteLine("Good job");
+                    Console.WriteLine("you already guessed that letter!");
+                    letterGuess = LetterGuess();
+                    if (!string.Join("", guessedLetters).Contains(guessedLetters.ToString()) && !string.Join("", wrongLetters).Contains(letterGuess.ToString()))
+                        newLetter = true;
                 }
+                if (word.Contains(letterGuess.ToString()))
+                {
+                    Console.WriteLine("Correct");
+                    for (int i = 0; i < word.Length; i++)
+                    {
+                        if (word[i] == letterGuess)
+                            randomWord[i] = letterGuess;
+                    }
+                    hiddenWord = string.Join("", randomWord);
+                    guessedLetters[correctIndex] = letterGuess;
+                    correctIndex++;
+
+                }
+                else
+                {
+                    attempts--;
+                    Console.WriteLine($"Sorry but your word doesn't contain that letter, you have {attempts} lives left");
+                }
+                if (!hiddenWord.Contains("*"))
+                {
+                    finishedGame = true;
+                }
+                Console.Clear();
 
             }
+                    Console.WriteLine($"Congrats you guessed the correct word! It was {word}");
+            Console.WriteLine("Press any button to go back to the main menu");
+            Console.ReadKey();
+                MainMenu();
         }
+        public static char LetterGuess()
+        {
+            Console.WriteLine("Please guess a letter.");
+            string letterGuess = "";
+            while (letterGuess.Length != 1)
+            {
+                letterGuess = Console.ReadLine();
+                if(letterGuess.Length != 1)
+                Console.WriteLine("Please input one letter at a time");
+            }
+            return Convert.ToChar(letterGuess.ToLower());
+        }
+
+
+
+
         static string RandomWordSelect()
         {
             try
@@ -91,18 +150,20 @@ namespace WordGuessGame
             }
             if(input == "1")
             {
-                ReadFile();
+                ReadFile(path);
                 AdminView();
             }
             if(input == "2")
             {
-                AddWord();
+            Console.WriteLine("What word you like to add to the word bank?");
+            string newWord = Console.ReadLine().ToLower();
+                AddWord(newWord);
                 AdminView();
             }
             if(input == "3")
             {
-                DeleteFile();
-                CreateFile();
+                DeleteFile(path);
+                CreateFile(path);
                 Console.WriteLine("Your word bank has now been reset to the default bank");
                 AdminView();
             }
@@ -111,29 +172,39 @@ namespace WordGuessGame
                 MainMenu();
             }
         }
-        static void AddWord()
+        public static void AddWord(string newWord)
         {
-            Console.WriteLine("What word you like to add to the word bank?");
-            string newWord = Console.ReadLine().ToLower();
             UpdateFile(newWord);
             Console.WriteLine($"{newWord} has now been added to the word bank.");
             AdminView();
         }
-        static void CreateFile()
+        public static string CreateFile(string path)
         {
-            if (!File.Exists((path)))
+            try
             {
-                using (StreamWriter sw = new StreamWriter(path))
+                if (!File.Exists(path) && path.Contains(".txt"))
                 {
+                    using (StreamWriter sw = new StreamWriter(path))
+                    {
                         sw.WriteLine("monkey");
                         sw.WriteLine("banana");
                         sw.WriteLine("ocean");
                         sw.WriteLine("coding");
                         sw.WriteLine("trampoline");
+                    }
+                    return "file created";
                 }
+                if (!path.Contains(".txt"))
+                    return "not a valid .txt file";
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "failed to create file";
+            }
+            return "file exists";
         }
-        static void ReadFile()
+        public static string ReadFile(string path)
         {
         try
             {
@@ -145,23 +216,34 @@ namespace WordGuessGame
                     Console.WriteLine(value);
                 }
                 Console.WriteLine($"The word bank currently holds {wordCount} words");
+                return "read file";
             }
             catch (Exception e)
             {
                 Console.WriteLine("Something went terribly wrong");
                 Console.WriteLine(e);
+                return "file does not exist";
             }
         }
-        static void UpdateFile(string word)
+        public static string UpdateFile(string word)
         {
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine(word);
+                return "updated file";
             }
         }
-        static void DeleteFile()
+        public static string DeleteFile(string path)
         {
+            try
+            {
             File.Delete(path);
+            return "file deleted";
+            }
+            catch (Exception)
+            {
+                return "file not found";
+            }
         }
 
     }
