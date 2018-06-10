@@ -50,5 +50,11 @@ namespace XUnitTestProject1
         {
             Assert.Equal(expectedResult, UpdateFile(word));
         }
+        [Theory]
+        [InlineData(@"", "")]
+        public void CanGuessLetter(string word, string expectedResult)
+        {
+            Assert.Equal(expectedResult, )
+        }
     }
 }
