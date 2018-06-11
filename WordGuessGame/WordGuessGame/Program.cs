@@ -5,12 +5,13 @@ namespace WordGuessGame
     public class Program
     {
         static string path = "../../../WordList.txt";
-
+        // initiates the main menu and creation of the default word bank
         static void Main(string[] args)
         {
             CreateFile(path);
             MainMenu();
         }
+        //displays main menu
         static void MainMenu()
         {
             Console.WriteLine("Welcome to my word guess game, Please select an option with 1, 2, or 3");
@@ -25,7 +26,7 @@ namespace WordGuessGame
                 }
             InputHandleMain(input);
             }
-
+        // handles navigation for the user in the main menu
         static void InputHandleMain(string input)
         {
             if(input == "1")
@@ -41,6 +42,7 @@ namespace WordGuessGame
                 Environment.Exit(0);
             }
         }
+        // initiates the start of the game, prompting the user for a letter guess, checks for if the letter is in the word and if it has been used before
         static void StartGame()
         {
             bool finishedGame = false;
@@ -103,6 +105,7 @@ namespace WordGuessGame
             Console.ReadKey();
                 MainMenu();
         }
+        // takes in the user input for a letter, makes sure its just 1 character long, returns it as a lower case.
         public static char LetterGuess()
         {
             Console.WriteLine("Please guess a letter.");
@@ -115,10 +118,7 @@ namespace WordGuessGame
             }
             return Convert.ToChar(letterGuess.ToLower());
         }
-
-
-
-
+        //  randomly selects  word from word bank
         static string RandomWordSelect()
         {
             try
@@ -135,6 +135,7 @@ namespace WordGuessGame
                 return "Sorry but something went terribly wrong";
             }
         }
+        // displays admin view
         static void AdminView()
         {
             Console.WriteLine("Welcome to admin view. What would you like to do?");
@@ -172,12 +173,14 @@ namespace WordGuessGame
                 MainMenu();
             }
         }
+        // takes an input from the user to add a word to the word bank
         public static void AddWord(string newWord)
         {
             UpdateFile(newWord);
             Console.WriteLine($"{newWord} has now been added to the word bank.");
             AdminView();
         }
+        // creates a file if it doesn't exist, executed on loading on the program and when you delete the file
         public static string CreateFile(string path)
         {
             try
@@ -204,6 +207,7 @@ namespace WordGuessGame
             }
             return "file exists";
         }
+        // Reads the word bank and give posts a list for the user to see
         public static string ReadFile(string path)
         {
         try
@@ -225,6 +229,7 @@ namespace WordGuessGame
                 return "file does not exist";
             }
         }
+        // updates a word that the user chooses to
         public static string UpdateFile(string word)
         {
             using (StreamWriter sw = File.AppendText(path))
@@ -233,6 +238,7 @@ namespace WordGuessGame
                 return "updated file";
             }
         }
+        // deletes the .txt file and repopulates it with the default words by calling CreateFile()
         public static string DeleteFile(string path)
         {
             try

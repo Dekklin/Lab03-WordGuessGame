@@ -5727,23 +5727,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Collin\\.nuget\\packages\\": {},
+    "C:\\Users\\Owner\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Collin\\codefellows\\Lab03-WordGuessGame\\WordGuessGame\\XUnitTestProject1\\XUnitTestProject1.csproj",
+      "projectUniqueName": "C:\\Users\\Owner\\codefellows\\401\\Lab03-WordGuessGame\\WordGuessGame\\XUnitTestProject1\\XUnitTestProject1.csproj",
       "projectName": "XUnitTestProject1",
-      "projectPath": "C:\\Users\\Collin\\codefellows\\Lab03-WordGuessGame\\WordGuessGame\\XUnitTestProject1\\XUnitTestProject1.csproj",
-      "packagesPath": "C:\\Users\\Collin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Collin\\codefellows\\Lab03-WordGuessGame\\WordGuessGame\\XUnitTestProject1\\obj\\",
+      "projectPath": "C:\\Users\\Owner\\codefellows\\401\\Lab03-WordGuessGame\\WordGuessGame\\XUnitTestProject1\\XUnitTestProject1.csproj",
+      "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Owner\\codefellows\\401\\Lab03-WordGuessGame\\WordGuessGame\\XUnitTestProject1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Collin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5756,8 +5756,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Collin\\codefellows\\Lab03-WordGuessGame\\WordGuessGame\\WordGuessGame\\WordGuessGame.csproj": {
-              "projectPath": "C:\\Users\\Collin\\codefellows\\Lab03-WordGuessGame\\WordGuessGame\\WordGuessGame\\WordGuessGame.csproj"
+            "C:\\Users\\Owner\\codefellows\\401\\Lab03-WordGuessGame\\WordGuessGame\\WordGuessGame\\WordGuessGame.csproj": {
+              "projectPath": "C:\\Users\\Owner\\codefellows\\401\\Lab03-WordGuessGame\\WordGuessGame\\WordGuessGame\\WordGuessGame.csproj"
             }
           }
         }
